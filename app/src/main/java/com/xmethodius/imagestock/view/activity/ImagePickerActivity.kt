@@ -1,4 +1,4 @@
-package com.xmethodius.imagestock
+package com.xmethodius.imagestock.view.activity
 
 import android.R
 import android.content.Intent
@@ -12,13 +12,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
-import com.xmethodius.imagestock.PhotosAdapter.OnPhotoClickedListener
+import com.xmethodius.imagestock.view.recycler.adapter.PhotosAdapter
+import com.xmethodius.imagestock.view.recycler.adapter.PhotosAdapter.OnPhotoClickedListener
+import com.xmethodius.imagestock.api.RetrofitClient
+import com.xmethodius.imagestock.api.RetrofitInterface
+import com.xmethodius.imagestock.model.Image
+import com.xmethodius.imagestock.model.TotalResults
+import com.xmethodius.imagestock.view.recycler.RecyclerViewScrollListener
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
-class PhotoPickerActivity : AppCompatActivity() {
+class ImagePickerActivity : AppCompatActivity() {
     private var page = 1
     var searchLayout: FrameLayout? = null
     var appBarLayout: AppBarLayout? = null
@@ -28,6 +34,7 @@ class PhotoPickerActivity : AppCompatActivity() {
     var adapter: PhotosAdapter? = null
     var photoClickListener: OnPhotoClickedListener? = null
     var dataService: RetrofitInterface? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.act_img_picker)
@@ -71,48 +78,48 @@ class PhotoPickerActivity : AppCompatActivity() {
     private fun loadPhotos() {
         progressBar!!.visibility = View.VISIBLE
         dataService.getPhotos(page, null, "latest")
-            .enqueue(object : Callback<List<Image?>?> {
-                override fun onResponse(call: Call<List<Image?>?>?, response: Response<List<Image?>?>) {
-                    val photos: List<Image> = response.body() as List<Image>
-                    Log.d("Photos", "Photos Fetched " + photos.size)
-                    //add to adapter
-                    page++
-                    adapter.addPhotos(photos)
-                    recyclerView!!.adapter = adapter
-                    progressBar!!.visibility = View.GONE
-                }
+                ?.enqueue(object : Callback<List<Image?>?> {
+                    override fun onResponse(call: Call<List<Image?>?>?, response: Response<List<Image?>?>) {
+                        val images: List<Image> = response.body() as List<Image>
+                        Log.d("Photos", "Photos Fetched " + images.size)
+                        //add to adapter
+                        page++
+                        adapter.addImages(images)
+                        recyclerView!!.adapter = adapter
+                        progressBar!!.visibility = View.GONE
+                    }
 
-                override fun onFailure(call: Call<List<Image?>?>?, t: Throwable?) {
-                    progressBar!!.visibility = View.GONE
-                }
-            })
+                    override fun onFailure(call: Call<List<Image?>?>?, t: Throwable?) {
+                        progressBar!!.visibility = View.GONE
+                    }
+                })
     }
 
     fun search(query: String?) {
         if (query != null && query != "") {
             progressBar!!.visibility = View.VISIBLE
             dataService.searchPhotos(query, null, null, null)
-                .enqueue(object : Callback<TotalResults?> {
-                    override fun onResponse(
-                        call: Call<TotalResults?>?,
-                        response: Response<TotalResults?>
-                    ) {
-                        val results: TotalResults? = response.body()
-                        Log.d("Photos", "Total Results Found " + results.getTotal())
-                        val photos: List<Image> = results.getResults() as List<Image>
-                        adapter = PhotosAdapter(
-                            photos, this@PhotoPickerActivity,
-                            photoClickListener!!
-                        )
-                        recyclerView!!.adapter = adapter
-                        progressBar!!.visibility = View.GONE
-                    }
+                    ?.enqueue(object : Callback<TotalResults?> {
+                        override fun onResponse(
+                                call: Call<TotalResults?>?,
+                                response: Response<TotalResults?>
+                        ) {
+                            val results: TotalResults? = response.body()
+                            Log.d("Photos", "Total Results Found " + results.getTotal())
+                            val images: List<Image> = results?.getResults() as List<Image>
+                            adapter = PhotosAdapter(
+                                    images as MutableList<Image>, this@ImagePickerActivity,
+                                    photoClickListener!!
+                            )
+                            recyclerView!!.adapter = adapter
+                            progressBar!!.visibility = View.GONE
+                        }
 
-                    override fun onFailure(call: Call<TotalResults?>?, t: Throwable) {
-                        Log.d("Unsplash", t.localizedMessage)
-                        progressBar!!.visibility = View.GONE
-                    }
-                })
+                        override fun onFailure(call: Call<TotalResults?>?, t: Throwable) {
+                            Log.d("Unsplash", t.localizedMessage)
+                            progressBar!!.visibility = View.GONE
+                        }
+                    })
         } else {
             loadPhotos()
         }

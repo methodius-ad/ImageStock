@@ -1,4 +1,4 @@
-package com.xmethodius.imagestock
+package com.xmethodius.imagestock.view.recycler
 
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager

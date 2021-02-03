@@ -1,4 +1,4 @@
-package com.xmethodius.imagestock
+package com.xmethodius.imagestock.model
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

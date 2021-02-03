@@ -1,4 +1,4 @@
-package com.xmethodius.imagestock
+package com.xmethodius.imagestock.view.recycler.adapter
 
 import android.R
 import android.content.Context
@@ -8,12 +8,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
+import com.xmethodius.imagestock.model.Image
 
 
 class PhotosAdapter(
-    photos: MutableList<Image>,
-    context: Context,
-    listener: OnPhotoClickedListener
+        photos: MutableList<Image>,
+        context: Context,
+        listener: OnPhotoClickedListener
 ) :
     RecyclerView.Adapter<PhotosAdapter.ViewHolder>() {
     private val imageList: MutableList<Image>

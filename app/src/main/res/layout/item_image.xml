@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.xmethodius.imagestock.AppImageView
+    <com.xmethodius.imagestock.view.AppImageView
         android:id="@+id/img"
         android:scaleType="centerCrop"
         android:layout_width="match_parent"

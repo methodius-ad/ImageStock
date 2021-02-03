@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:animateLayoutChanges="true">
+    android:animateLayoutChanges="true"
+    tools:context=".view.activity.ImagePickerActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBar"

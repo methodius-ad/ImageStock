@@ -1,6 +1,6 @@
-package com.xmethodius.imagestock
+package com.xmethodius.imagestock.api
 
-import okhttp3.Interceptor
+import com.xmethodius.imagestock.Config
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

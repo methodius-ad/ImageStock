@@ -1,4 +1,4 @@
-package com.xmethodius.imagestock
+package com.xmethodius.imagestock.view
 
 import android.annotation.SuppressLint
 import android.content.Context

@@ -1,5 +1,8 @@
-package com.xmethodius.imagestock
+package com.xmethodius.imagestock.api
 
+import com.xmethodius.imagestock.model.Image
+import com.xmethodius.imagestock.model.Load
+import com.xmethodius.imagestock.model.TotalResults
 import retrofit2.Call;
 import retrofit2.http.GET
 import retrofit2.http.Path;
