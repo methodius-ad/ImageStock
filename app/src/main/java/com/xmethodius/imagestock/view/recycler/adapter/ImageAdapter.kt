@@ -1,6 +1,7 @@
 package com.xmethodius.imagestock.view.recycler.adapter
 
 import android.R
+import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +23,7 @@ class PhotosAdapter(
     private val mListener: OnPhotoClickedListener
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_image, parent, false)
+            LayoutInflater.from(mContext).inflate(R.layout.item_image, parent, false)
         return ViewHolder(view)
     }
 
