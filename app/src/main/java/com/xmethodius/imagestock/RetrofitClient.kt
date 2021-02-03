@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitClient {
     private var retrofit: Retrofit? = null
-    fun getUnsplashClient(): Retrofit? {
+    fun getClient(): Retrofit? {
         if (retrofit == null) {
             val client = OkHttpClient.Builder()
                 .addInterceptor(MainInterceptor(Config.base_access_key)).build()
